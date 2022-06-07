@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { betDice } from "../redux/actions/diceActions";
 
 class Bet extends Component {
   render() {
-    const { diceArray, onBet } = this.props;
+    const { diceArray, betDice } = this.props;
     return (
       <div>
         <div className="row mb-5 text-center ">
           <div className="col-3">
-            <button className="btn btn-info p-4" onClick={() => onBet("TÀI")}>
+            <button className="btn btn-info p-4" onClick={() => betDice("TÀI")}>
               <h1>Tài</h1>
             </button>
           </div>
@@ -25,7 +26,7 @@ class Bet extends Component {
             ))}
           </div>
           <div className="col-3">
-            <button className="btn btn-info p-4" onClick={() => onBet("XỈU")}>
+            <button className="btn btn-info p-4" onClick={() => betDice("XỈU")}>
               <h1>Xỉu</h1>
             </button>
           </div>
@@ -43,9 +44,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBet: (value) => {
-      const action = { type: "BET", value };
-      dispatch(action);
+    betDice: (value) => {
+      dispatch(betDice(value));
     },
   };
 };

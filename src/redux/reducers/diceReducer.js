@@ -4,6 +4,7 @@ import d3 from "../../assets/img/3.png";
 import d4 from "../../assets/img/4.png";
 import d5 from "../../assets/img/5.png";
 import d6 from "../../assets/img/6.png";
+import { BET_DICE, CALC_DICE, RANDOM_DICE } from "../constants/diceConstants";
 
 const diceList = [
   { id: 1, src: d1, value: 1 },
@@ -18,7 +19,7 @@ const initialState = {
   diceArray: [
     { id: 1, src: d1, value: 1 },
     { id: 2, src: d2, value: 2 },
-    { id: 6, src: d3, value: 3 },
+    { id: 3, src: d3, value: 3 },
   ],
 
   choose: "TÀI",
@@ -28,10 +29,10 @@ const initialState = {
 
 const diceReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "BET": {
+    case BET_DICE: {
       return { ...state, choose: action.value };
     }
-    case "RANDOM_DICE": {
+    case RANDOM_DICE: {
       //random xí ngầu
       const diceArray = state.diceArray.map((dice, index) => {
         const randomDiceIndex = Math.floor(Math.random() * diceList.length);
@@ -40,7 +41,7 @@ const diceReducer = (state = initialState, action) => {
 
       return { ...state, diceArray };
     }
-    case "CALC_DICE": {
+    case CALC_DICE: {
       let totalWin = state.totalWin;
       //tính điểm
       const point = state.diceArray.reduce((total, dice) => {

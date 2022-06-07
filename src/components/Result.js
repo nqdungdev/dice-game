@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { calcDice, randomDice } from "../redux/actions/diceActions";
 
 class Result extends Component {
   render() {
-    const { choose, totalWin, totalPlay, onRandom, onCalc } = this.props;
+    const { choose, totalWin, totalPlay, randomDice, calcDice } = this.props;
     return (
       <div className="d-flex justify-content-center flex-column align-items-center">
         <h3>
@@ -17,14 +18,16 @@ class Result extends Component {
         </h3>
         <button
           className="btn btn-success p-3 mt-3"
-          onClick={() => {
+          onClick={(e) => {
             const intervalId = setInterval(() => {
-              onRandom();
+              e.target.disabled = true;
+              randomDice();
             }, 10);
 
             setTimeout(() => {
               clearInterval(intervalId);
-              onCalc();
+              calcDice();
+              e.target.disabled = false;
             }, 3000);
           }}
         >
@@ -45,13 +48,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCalc: () => {
-      const action = { type: "CALC_DICE" };
-      dispatch(action);
+    calcDice: () => {
+      dispatch(calcDice());
     },
-    onRandom: () => {
-      const action = { type: "RANDOM_DICE" };
-      dispatch(action);
+    randomDice: () => {
+      dispatch(randomDice());
     },
   };
 };
